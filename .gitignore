@@ -1,0 +1,7 @@
+/node_modules/*
+.vscode/*
+/dist/*
+.idea/
+/src/configs/database/mysql.json
+/src/compoents/oss.ts
+/src/configs/common/wechat.ts
