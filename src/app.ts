@@ -69,9 +69,11 @@ class App {
     app.use(morgan("dev")); // 打印请求
     app.use(helmet()); // 设置Http头
     app.use(compression()); // 压缩response
-    app.use(bodyParser.json()); // 解析application/json
+    // app.use(bodyParser.json()); // 解析application/json
     app.use(upload.any());
-    app.use(bodyParser.urlencoded({ extended: false })); // 解析application/x-www-form-urlencode
+    // app.use(bodyParser.urlencoded({ extended: false })); // 解析application/x-www-form-urlencode
+    app.use(bodyParser.json({ limit: "50mb" }));
+    app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
     app.use(express.static(path.join(__dirname, "public"))); // 静态资源目录
     app.use(cookieParser(sessionSecret));
     // 使用session

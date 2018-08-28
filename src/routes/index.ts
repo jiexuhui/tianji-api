@@ -1,8 +1,9 @@
 import { Router } from "express";
 import msgCode from "../compoents/msgcode";
 import apiRouter from "../routes/api";
+import articleRouter from "../routes/article";
+import bannerRouter from "../routes/banner";
 import gameRouter from "../routes/game";
-import serverRouter from "../routes/server";
 import systemRouter from "../routes/system";
 
 /**
@@ -19,10 +20,11 @@ class BaseRouter {
     this.router.get("/", (req, res, next) => {
       res.json(msgCode.invalidRequest);
     });
-    this.router.use("/admin/server", serverRouter);
     this.router.use("/admin/game", gameRouter);
     this.router.use("/admin", systemRouter);
     this.router.use("/api", apiRouter);
+    this.router.use("/admin/banner", bannerRouter);
+    this.router.use("/admin/article", articleRouter);
   }
 }
 

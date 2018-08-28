@@ -1,34 +1,34 @@
 import * as debug from "debug";
 import { NextFunction, Request, Response } from "express";
 import msgCode from "../compoents/msgcode";
-const debugLog = debug("api:controller:api");
+const debugLog = debug("api:controller:article");
 
 import co from "co";
 import * as fs from "fs";
 import ossconfig from "../compoents/oss";
 import Tools from "../compoents/tools";
-import dbGame from "../service/game";
+import dbArticle from "../service/article";
 import dbSystem from "../service/system";
 
 const OSS = require("ali-oss");
 const client = new OSS(ossconfig);
 
-class Game {
+class Banner {
   /**
-   * 获取游戏列表
+   * 获取文章列表
    * @param req
    * @param res
    * @param next
    */
   public static async list(req: Request, res: Response, next: NextFunction) {
-    const { id = 0, game = "", page = 1, limit = 20 } = req.body;
-    await dbGame
-      .list(id, game, page, limit)
+    const { title = "", page = 1, limit = 20 } = req.body;
+    await dbArticle
+      .list(title, page, limit)
       .then(data => {
         dbSystem.addoperatelog(
           req.session.user.username,
-          "查看游戏列表",
-          "查看游戏列表，参数》》》" + JSON.stringify(req.body)
+          "查看文章列表",
+          "查看文章列表，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -36,21 +36,27 @@ class Game {
   }
 
   /**
-   * 添加游戏
+   * 添加文章
    * @param req
    * @param res
    * @param next
    */
   public static async add(req: Request, res: Response, next: NextFunction) {
-    const { game = "", logo = "" } = req.body;
-    await dbGame
-      .add(game, logo)
+    const {
+      title = "",
+      date = "",
+      author = "",
+      content = "",
+      status = 0
+    } = req.body;
+    await dbArticle
+      .add(title, date, author, content, status)
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
           req.session.user.username,
-          "添加游戏",
-          "添加游戏，参数》》》" + JSON.stringify(req.body)
+          "添加文章",
+          "添加文章，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -64,15 +70,22 @@ class Game {
    * @param next
    */
   public static async edit(req: Request, res: Response, next: NextFunction) {
-    const { id = 0, game = "", logo = "" } = req.body;
-    await dbGame
-      .edit(id, game, logo)
+    const {
+      id = 0,
+      title = "",
+      date = "",
+      author = "",
+      content = "",
+      status = 0
+    } = req.body;
+    await dbArticle
+      .edit(id, title, date, author, content, status)
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
           req.session.user.username,
-          "编辑游戏",
-          "编辑游戏，参数》》》" + JSON.stringify(req.body)
+          "编辑文章",
+          "编辑文章，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -87,7 +100,7 @@ class Game {
    */
   public static async delete(req: Request, res: Response, next: NextFunction) {
     const id = req.body.id;
-    await dbGame
+    await dbArticle
       .delete(id)
       .then(data => {
         debugLog("add result >>>%0", data);
@@ -100,33 +113,5 @@ class Game {
       })
       .catch(err => next(err));
   }
-
-  /**
-   * 上传Logo
-   * @param req
-   * @param res
-   * @param next
-   */
-  public static async upload(req: any, res: Response, next: NextFunction) {
-    const files = req.files;
-    debug("api:upload")("file:%o", req.files);
-    const filename = "uploads/" + files[0].filename;
-    co(function*() {
-      client.useBucket("topimgs");
-      const result = yield client.put(
-        "game/logo/" + files[0].originalname,
-        filename
-      );
-      const list = yield client.list();
-      debug("api:upload:")("list:", result);
-      fs.unlinkSync(filename);
-      msgCode.success.data = result;
-      res.json(msgCode.success);
-      return;
-    }).catch(err => {
-      next(err);
-      debug("api:upload:%j")("err:", err);
-    });
-  }
 }
-export default Game;
+export default Banner;

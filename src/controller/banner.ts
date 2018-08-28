@@ -7,13 +7,13 @@ import co from "co";
 import * as fs from "fs";
 import ossconfig from "../compoents/oss";
 import Tools from "../compoents/tools";
-import dbGame from "../service/game";
+import dbBanner from "../service/banner";
 import dbSystem from "../service/system";
 
 const OSS = require("ali-oss");
 const client = new OSS(ossconfig);
 
-class Game {
+class Banner {
   /**
    * 获取游戏列表
    * @param req
@@ -21,14 +21,14 @@ class Game {
    * @param next
    */
   public static async list(req: Request, res: Response, next: NextFunction) {
-    const { id = 0, game = "", page = 1, limit = 20 } = req.body;
-    await dbGame
-      .list(id, game, page, limit)
+    const { name = "", status = 0, page = 1, limit = 20 } = req.body;
+    await dbBanner
+      .list(name, status, page, limit)
       .then(data => {
         dbSystem.addoperatelog(
           req.session.user.username,
-          "查看游戏列表",
-          "查看游戏列表，参数》》》" + JSON.stringify(req.body)
+          "查看banner列表",
+          "查看banner列表，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -42,15 +42,15 @@ class Game {
    * @param next
    */
   public static async add(req: Request, res: Response, next: NextFunction) {
-    const { game = "", logo = "" } = req.body;
-    await dbGame
-      .add(game, logo)
+    const { name = "", picture = "", url = "", status = 0 } = req.body;
+    await dbBanner
+      .add(name, picture, url, status)
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
           req.session.user.username,
-          "添加游戏",
-          "添加游戏，参数》》》" + JSON.stringify(req.body)
+          "添加Banner",
+          "添加Banner，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -64,15 +64,15 @@ class Game {
    * @param next
    */
   public static async edit(req: Request, res: Response, next: NextFunction) {
-    const { id = 0, game = "", logo = "" } = req.body;
-    await dbGame
-      .edit(id, game, logo)
+    const { id = 0, name = "", picture = "", url = "", status = 0 } = req.body;
+    await dbBanner
+      .edit(id, name, picture, url, status)
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
           req.session.user.username,
-          "编辑游戏",
-          "编辑游戏，参数》》》" + JSON.stringify(req.body)
+          "编辑banner",
+          "编辑banner，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -87,7 +87,7 @@ class Game {
    */
   public static async delete(req: Request, res: Response, next: NextFunction) {
     const id = req.body.id;
-    await dbGame
+    await dbBanner
       .delete(id)
       .then(data => {
         debugLog("add result >>>%0", data);
@@ -114,7 +114,7 @@ class Game {
     co(function*() {
       client.useBucket("topimgs");
       const result = yield client.put(
-        "game/logo/" + files[0].originalname,
+        "game/banner/" + files[0].originalname,
         filename
       );
       const list = yield client.list();
@@ -129,4 +129,4 @@ class Game {
     });
   }
 }
-export default Game;
+export default Banner;

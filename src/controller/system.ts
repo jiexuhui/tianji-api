@@ -455,8 +455,9 @@ class System {
    */
   private static buildTree(m: any, menus: any) {
     // debug("api:menu:buildTree")("m", m);
-    // debug("api:menu:buildTree")("menus", menus);
+    // debug("api:menu:buildTree")("menus:%o", menus);
     for (const menu of menus) {
+      menu.hidden = menu.display === 1 ? false : true;
       if (menu.pid === m.id) {
         if (!m.children) {
           m.children = [];
