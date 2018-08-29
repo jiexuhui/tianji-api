@@ -7,6 +7,6 @@
     "outDir": "dist",
     "pretty": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../tianji-admin/src/api/team.js"],
   "exclude": ["node_modules"]
 }

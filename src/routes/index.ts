@@ -5,6 +5,7 @@ import articleRouter from "../routes/article";
 import bannerRouter from "../routes/banner";
 import gameRouter from "../routes/game";
 import systemRouter from "../routes/system";
+import teamRouter from "../routes/team";
 
 /**
  * 基础路由
@@ -25,6 +26,7 @@ class BaseRouter {
     this.router.use("/api", apiRouter);
     this.router.use("/admin/banner", bannerRouter);
     this.router.use("/admin/article", articleRouter);
+    this.router.use("/admin/team", teamRouter);
   }
 }
 
