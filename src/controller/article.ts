@@ -47,10 +47,11 @@ class Banner {
       date = "",
       author = "",
       content = "",
-      status = 0
+      status = 0,
+      matchid = 0
     } = req.body;
     await dbArticle
-      .add(title, date, author, content, status)
+      .add(title, date, author, content, status, matchid)
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
@@ -76,10 +77,11 @@ class Banner {
       date = "",
       author = "",
       content = "",
-      status = 0
+      status = 0,
+      matchid = 0
     } = req.body;
     await dbArticle
-      .edit(id, title, date, author, content, status)
+      .edit(id, title, date, author, content, status, matchid)
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(

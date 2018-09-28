@@ -7,24 +7,6 @@ const db = new MySql(dbConfig.admin.connConfig);
 
 class Api {
   /**
-   * 判断主播是否为新人
-   */
-  public static async isNewanchor(params: {
-    avatarUrl: string;
-    city: string;
-    country: string;
-    gender: number;
-    language: string;
-    nickName: string;
-    province: string;
-    openid: string;
-  }) {
-    return await db.execMultiple(
-      "call p_api_anchor_isnew(:avatarUrl,:city,:country,:gender,:language,:nickName,:province,:openid)",
-      params
-    );
-  }
-  /**
    * 保存用户信息
    * @param params
    */
@@ -50,148 +32,48 @@ class Api {
       params
     );
   }
-  /**
-   * 用户报告列表
-   * @param openid
-   */
-  public static async userreports(openid: string) {
-    return await db.exec("call p_api_user_reports(:openid)", { openid });
-  }
 
   /**
-   * 用户报告详情
-   * @param openid
+   * 获取首页活动
    */
-  public static async reportdetail(reportid: number) {
-    return await db.execMultiple("call p_api_report_detail(:reportid)", {
-      reportid
-    });
-  }
-
-  /**
-   * 获取首页数据
-   */
-  public static async goodslist(
-    openid: string,
-    category: number,
-    classify: number,
-    keyword: string,
-    page: number
-  ) {
-    return await db.execMultiple(
-      "call p_api_goods_list(:openid,:category,:classify,:keyword,:page)",
-      {
-        openid,
-        category,
-        classify,
-        keyword,
-        page
-      }
-    );
-  }
-
-  /**
-   * 插入已选取物品
-   */
-  public static async addcheckedlist(openid: string, goodsid: number) {
-    return await db.execMultiple("call p_api_add_checklist(:openid,:goodsid)", {
-      openid,
-      goodsid
-    });
-  }
-
-  /**
-   * 获取已选取物品
-   */
-  public static async checkedgoods(openid: string) {
-    return await db.exec("call p_api_checked_goods(:openid)", {
+  public static async getActivityInfo(openid: string) {
+    return await db.execMultiple("call p_api_activity_list(:openid)", {
       openid
     });
   }
 
   /**
-   * 删除已选取物品
+   * 选择队伍
    */
-  public static async delcheckedgoods(openid: string, goodsid: number) {
-    return await db.exec("call p_api_del_checkgoods(:openid,:goodsid)", {
-      openid,
-      goodsid
-    });
-  }
-
-  /**
-   * 删除已选取物品
-   */
-  public static async applyprogram(
+  public static async selectTeam(
+    matchid: number,
     openid: string,
-    livename: string,
-    startTime: string,
-    endTime: string,
-    goodslist: string,
-    isbook: number,
-    formId: string
+    teamid: number
   ) {
-    return await db.exec(
-      "call p_api_save_program(:openid,:livename,:startTime,:endTime,:goodslist,:isbook,:formId)",
-      {
-        openid,
-        livename,
-        startTime,
-        endTime,
-        goodslist,
-        isbook,
-        formId
-      }
-    );
-  }
-  /**
-   * 获取物品类型
-   */
-  public static async cateloglist(id: number) {
-    return await db.exec("call p_api_category_list(:id)", { id });
-  }
-
-  /**
-   * 获取用户播单
-   */
-  public static async userprograms(openid: string, status: number) {
-    return await db.exec("call p_api_user_programs(:openid,:status)", {
+    return await db.exec("call p_api_select_team(:matchid,:openid,:teamid)", {
+      matchid,
       openid,
-      status
+      teamid
     });
   }
 
   /**
-   * 获取用户播单内物品
+   * 赛事列表
+   * @param gametype
    */
-  public static async programgoods(goodslist: number) {
-    return await db.exec("call p_api_program_goods(:goodslist)", {
-      goodslist
+  public static async matchList(gametype: number) {
+    return await db.execMultiple("call p_api_match_list(:gametype)", {
+      gametype
     });
   }
 
   /**
-   * 取消播单
+   * 赛事相关文章
+   * @param gametype
    */
-  public static async invalidprogram(id: number) {
-    return await db.exec("call p_api_cancel_program(:id)", { id });
-  }
-
-  /**
-   * 搜索页数据
-   */
-  public static async searchindex(openid: string) {
-    return await db.execMultiple("call p_api_search_index(:openid)", {
-      openid
-    });
-  }
-
-  /**
-   * 物品库存详情
-   */
-  public static async goodsstore(goodsid: number) {
-    return await db.execMultiple("call p_api_goods_store(:goodsid)", {
-      goodsid
+  public static async getMatchArticles(matchid: number) {
+    return await db.execMultiple("call p_api_match_articles(:matchid)", {
+      matchid
     });
   }
 }

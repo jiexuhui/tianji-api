@@ -47,10 +47,30 @@ class Match {
       desc = "",
       teams = "",
       gameid = 0,
-      time = []
+      status = 0,
+      sort = 0,
+      stime = "",
+      etime = "",
+      leftteam = 0,
+      leftscore = 0,
+      rightteam = 0,
+      rightscore = 0
     } = req.body;
     await dbMatch
-      .add(name, desc, teams, gameid, time[0] || "", time[1] || "")
+      .add(
+        name,
+        desc,
+        teams,
+        gameid,
+        status,
+        sort,
+        stime,
+        etime,
+        leftteam,
+        leftscore,
+        rightteam,
+        rightscore
+      )
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
@@ -76,11 +96,31 @@ class Match {
       desc = "",
       teams = "",
       gameid = 0,
+      status = 0,
+      sort = 0,
       stime = "",
-      etime = ""
+      etime = "",
+      leftteam = 0,
+      leftscore = 0,
+      rightteam = 0,
+      rightscore = 0
     } = req.body;
     await dbMatch
-      .edit(id, name, desc, teams, gameid, stime, etime)
+      .edit(
+        id,
+        name,
+        desc,
+        teams,
+        gameid,
+        status,
+        sort,
+        stime,
+        etime,
+        leftteam,
+        leftscore,
+        rightteam,
+        rightscore
+      )
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(

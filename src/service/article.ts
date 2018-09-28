@@ -30,16 +30,18 @@ class Article {
     date: string,
     author: string,
     content: number,
-    status: number
+    status: number,
+    matchid: number
   ) {
     return await db.exec(
-      "call p_bk_article_add(:title,:date,:author,:content,:status)",
+      "call p_bk_article_add(:title,:date,:author,:content,:status,:matchid)",
       {
         title,
         date,
         author,
         content,
-        status
+        status,
+        matchid
       }
     );
   }
@@ -56,17 +58,19 @@ class Article {
     date: string,
     author: string,
     content: number,
-    status: number
+    status: number,
+    matchid: number
   ) {
     return await db.exec(
-      "call p_bk_article_edit(:id,:title,:date,:author,:content,:status)",
+      "call p_bk_article_edit(:id,:title,:date,:author,:content,:status,:matchid)",
       {
         id,
         title,
         date,
         author,
         content,
-        status
+        status,
+        matchid
       }
     );
   }

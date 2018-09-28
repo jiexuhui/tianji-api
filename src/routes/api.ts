@@ -14,20 +14,10 @@ class ApiRouter {
   private init() {
     this.router
       .post("/loginByWeixin", api.loginByWeixin)
-      .post("/saveuserinfo", api.saveuserinfo)
-      .post("/userreports", api.userreports)
-      .post("/reportdetail", api.reportdetail)
-      .post("/goodslist", api.goodslist)
-      .post("/addcheckedlist", api.addcheckedlist)
-      .post("/checkedgoods", api.checkedgoods)
-      .post("/delcheckedgoods", api.delcheckedgoods)
-      .post("/applyprogram", api.applyprogram)
-      .post("/cateloglist", api.cateloglist)
-      .post("/userprograms", api.userprograms)
-      .post("/programgoods", api.programgoods)
-      .post("/invalidprogram", api.invalidprogram)
-      .post("/searchindex", api.searchindex)
-      .post("/goodsstore", api.goodsstore);
+      .post("/getActivityInfo", api.getActivityInfo)
+      .post("/selectTeam", api.selectTeam)
+      .post("/matchList", api.matchList)
+      .post("/getMatchArticle", api.getMatchArticles);
   }
 }
 

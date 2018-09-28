@@ -41,18 +41,31 @@ class Match {
     desc: string,
     teams: string,
     gameid: number,
+    status: number,
+    sort: number,
     stime: string,
-    etime: string
+    etime: string,
+    leftteam: number,
+    leftscore: number,
+    rightteam: number,
+    rightscore: number
   ) {
     return await db.exec(
-      "call p_bk_match_add(:name,:desc,:teams,:gameid,:stime,:etime)",
+      `call p_bk_match_add(:name,:desc,:teams,:gameid,:status,:sort,:stime,:etime,
+        :leftteam,:leftscore,:rightteam,:rightscore)`,
       {
         name,
         desc,
         teams,
         gameid,
+        status,
+        sort,
         stime,
-        etime
+        etime,
+        leftteam,
+        leftscore,
+        rightteam,
+        rightscore
       }
     );
   }
@@ -69,19 +82,32 @@ class Match {
     desc: string,
     teams: string,
     gameid: number,
+    status: number,
+    sort: number,
     stime: string,
-    etime: string
+    etime: string,
+    leftteam: number,
+    leftscore: number,
+    rightteam: number,
+    rightscore: number
   ) {
     return await db.exec(
-      "call p_bk_match_edit(:id,:name,:desc,:teams,:gameid,:stime,:etime)",
+      `call p_bk_match_edit(:id,:name,:desc,:teams,:gameid,:status,:sort,:stime,
+        :etime,:leftteam,:leftscore,:rightteam,:rightscore)`,
       {
         id,
         name,
         desc,
         teams,
         gameid,
+        status,
+        sort,
         stime,
-        etime
+        etime,
+        leftteam,
+        leftscore,
+        rightteam,
+        rightscore
       }
     );
   }
