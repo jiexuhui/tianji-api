@@ -5,6 +5,7 @@ import articleRouter from "../routes/article";
 import bannerRouter from "../routes/banner";
 import gameRouter from "../routes/game";
 import matchRouter from "../routes/match";
+import seriseRouter from "../routes/serise";
 import systemRouter from "../routes/system";
 import teamRouter from "../routes/team";
 
@@ -29,6 +30,7 @@ class BaseRouter {
     this.router.use("/admin/article", articleRouter);
     this.router.use("/admin/team", teamRouter);
     this.router.use("/admin/match", matchRouter);
+    this.router.use("/admin/serise", seriseRouter);
   }
 }
 

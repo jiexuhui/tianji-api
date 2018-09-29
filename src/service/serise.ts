@@ -5,33 +5,29 @@ import { ILoginUser } from "../interface/loginusers";
 const dbConfig = require("../configs/database/mysql.json");
 const db = new MySql(dbConfig.admin.connConfig);
 
-class Match {
+class Serise {
   /**
-   * 队伍列表
-   * @param id
+   * 赛事列表
    * @param name
-   * @param type
-   * @param gameid
    * @param status
    * @param page
    * @param limit
    */
   public static async list(
-    id: number,
     name: string,
     status: number,
+    gameid: number,
     page: number,
-    limit: number,
-    seriseid: number
+    limit: number
   ) {
     return await db.execMultiple(
-      "call p_bk_match_list(:id,:name,:status,:page,:limit,:seriseid)",
-      { id, name, status, page, limit, seriseid }
+      "call p_bk_serise_list(:name,:status,:gameid,:page,:limit)",
+      { name, status, gameid, page, limit }
     );
   }
 
   /**
-   * 添加队伍
+   * 添加赛事
    * @param name
    * @param logo
    * @param type
@@ -43,37 +39,24 @@ class Match {
     desc: string,
     teams: string,
     gameid: number,
+    image: string,
+    many: number,
     status: number,
-    sort: number,
     stime: string,
     etime: string,
-    leftteam: number,
-    leftscore: number,
-    rightteam: number,
-    rightscore: number,
-    many: number,
-    whitch: number,
-    seriseid: number
   ) {
     return await db.exec(
-      `call p_bk_match_add(:name,:desc,:teams,:gameid,:status,:sort,:stime,:etime,
-        :leftteam,:leftscore,:rightteam,:rightscore,:many,:whitch,:seriseid)`,
+      `call p_bk_serise_add(:name,:desc,:teams,:gameid,:image,:many,:status,:stime,:etime)`,
       {
         name,
         desc,
         teams,
         gameid,
-        status,
-        sort,
-        stime,
-        etime,
-        leftteam,
-        leftscore,
-        rightteam,
-        rightscore,
+        image,
         many,
-        whitch,
-        seriseid
+        status,
+        stime,
+        etime
       }
     );
   }
@@ -90,38 +73,25 @@ class Match {
     desc: string,
     teams: string,
     gameid: number,
+    image: string,
+    many: number,
     status: number,
-    sort: number,
     stime: string,
     etime: string,
-    leftteam: number,
-    leftscore: number,
-    rightteam: number,
-    rightscore: number,
-    many: number,
-    whitch: number,
-    seriseid: number
   ) {
     return await db.exec(
-      `call p_bk_match_edit(:id,:name,:desc,:teams,:gameid,:status,:sort,:stime,
-        :etime,:leftteam,:leftscore,:rightteam,:rightscore,:many,:whitch,:seriseid)`,
+      `call p_bk_serise_edit(:id,:name,:desc,:teams,:gameid,:image,:many,:status,:stime,:etime)`,
       {
         id,
         name,
         desc,
         teams,
         gameid,
-        status,
-        sort,
-        stime,
-        etime,
-        leftteam,
-        leftscore,
-        rightteam,
-        rightscore,
+        image,
         many,
-        whitch,
-        seriseid
+        status,
+        stime,
+        etime
       }
     );
   }
@@ -131,9 +101,9 @@ class Match {
    * @param id
    */
   public static async delete(id: number) {
-    return await db.exec("call p_bk_match_delete(:id)", {
+    return await db.exec("call p_bk_serise_delete(:id)", {
       id
     });
   }
 }
-export default Match;
+export default Serise;

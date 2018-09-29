@@ -11,7 +11,8 @@ class BannerRouter {
       .post("/list", article.list)
       .post("/add", article.add)
       .post("/edit", article.edit)
-      .post("/delete", article.delete);
+      .post("/delete", article.delete)
+      .post("/upload", article.upload);
   }
 }
 

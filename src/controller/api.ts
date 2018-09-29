@@ -113,5 +113,22 @@ class Api {
       .then(data => res.json(Tools.handleResult(data)))
       .catch(err => next(err));
   }
+
+  /**
+   * 获取首页BANNER
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async getBanners(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .getBanners()
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
 }
 export default Api;

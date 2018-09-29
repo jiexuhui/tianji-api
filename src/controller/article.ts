@@ -48,10 +48,11 @@ class Banner {
       author = "",
       content = "",
       status = 0,
-      matchid = 0
+      matchid = 0,
+      tag = 0
     } = req.body;
     await dbArticle
-      .add(title, date, author, content, status, matchid)
+      .add(title, date, author, content, status, matchid, tag)
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
@@ -78,10 +79,12 @@ class Banner {
       author = "",
       content = "",
       status = 0,
-      matchid = 0
+      matchid = 0,
+      tag = 0,
+      image = ""
     } = req.body;
     await dbArticle
-      .edit(id, title, date, author, content, status, matchid)
+      .edit(id, title, date, author, content, status, matchid, tag, image)
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
@@ -114,6 +117,34 @@ class Banner {
         res.json(Tools.handleResult(data));
       })
       .catch(err => next(err));
+  }
+
+  /**
+   * 上传配图
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async upload(req: any, res: Response, next: NextFunction) {
+    const files = req.files;
+    debug("api:upload")("file:%o", req.files);
+    const filename = "uploads/" + files[0].filename;
+    co(function*() {
+      client.useBucket("topimgs");
+      const result = yield client.put(
+        "game/article/" + files[0].originalname,
+        filename
+      );
+      const list = yield client.list();
+      debug("api:upload:")("list:", result);
+      fs.unlinkSync(filename);
+      msgCode.success.data = result;
+      res.json(msgCode.success);
+      return;
+    }).catch(err => {
+      next(err);
+      debug("api:upload:%j")("err:", err);
+    });
   }
 }
 export default Banner;

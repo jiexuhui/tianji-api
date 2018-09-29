@@ -23,7 +23,7 @@ class Banner {
   public static async list(req: Request, res: Response, next: NextFunction) {
     const { name = "", status = 0, page = 1, limit = 20 } = req.body;
     await dbBanner
-      .list(name, status, page, limit)
+      .list(name, status === "" ? 0 : status, page, limit)
       .then(data => {
         dbSystem.addoperatelog(
           req.session.user.username,
