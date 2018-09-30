@@ -18,6 +18,7 @@ export const msgCode = {
   existsBanner: { code: 10007, msg: "已经存在相同的banner名称" },
   existsArticle: { code: 10008, msg: "标题重复" },
   existsTeam: { code: 10009, msg: "队伍已存在" },
-  existsActicityLog: { code: 10010, msg: "已选择队伍" }
+  existsActicityLog: { code: 10010, msg: "已选择队伍" },
+  existsSerise: { code: 10011, msg: "赛事已存在" }
 };
 export default msgCode;

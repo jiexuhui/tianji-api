@@ -70,5 +70,13 @@ class Api {
       matchid
     });
   }
+
+  /**
+   * 获取首页BANNER
+   * @param gametype
+   */
+  public static async getBanners() {
+    return await db.execMultiple("call p_api_banners()");
+  }
 }
 export default Api;

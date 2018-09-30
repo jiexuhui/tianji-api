@@ -15,15 +15,15 @@ const client = new OSS(ossconfig);
 
 class Match {
   /**
-   * 获取队伍列表
+   * 获取比赛列表
    * @param req
    * @param res
    * @param next
    */
   public static async list(req: Request, res: Response, next: NextFunction) {
-    const { id = 0, name = "", page = 1, limit = 20 } = req.body;
+    const { id = 0, name = "", status = 0, page = 1, limit = 20, seriseid = 0} = req.body;
     await dbMatch
-      .list(id, name, page, limit)
+      .list(id === "" ? 0 : id, name, status === "" ? 0 : status, page, limit, seriseid === "" ? 0 : seriseid)
       .then(data => {
         dbSystem.addoperatelog(
           req.session.user.username,
@@ -54,22 +54,28 @@ class Match {
       leftteam = 0,
       leftscore = 0,
       rightteam = 0,
-      rightscore = 0
+      rightscore = 0,
+      many = 1,
+      whitch = 1,
+      seriseid
     } = req.body;
     await dbMatch
       .add(
         name,
         desc,
         teams,
-        gameid,
-        status,
+        gameid === "" ? 0 : gameid,
+        status === "" ? 0 : status,
         sort,
         stime,
         etime,
         leftteam,
         leftscore,
         rightteam,
-        rightscore
+        rightscore,
+        many,
+        whitch,
+        seriseid
       )
       .then(data => {
         debugLog("add result >>>%0", data);
@@ -103,7 +109,10 @@ class Match {
       leftteam = 0,
       leftscore = 0,
       rightteam = 0,
-      rightscore = 0
+      rightscore = 0,
+      many = 1,
+      whitch = 1,
+      seriseid = 0
     } = req.body;
     await dbMatch
       .edit(
@@ -119,7 +128,10 @@ class Match {
         leftteam,
         leftscore,
         rightteam,
-        rightscore
+        rightscore,
+        many,
+        whitch,
+        seriseid
       )
       .then(data => {
         debugLog("add result >>>%0", data);

@@ -7,37 +7,28 @@ import co from "co";
 import * as fs from "fs";
 import ossconfig from "../compoents/oss";
 import Tools from "../compoents/tools";
+import dbSerise from "../service/serise";
 import dbSystem from "../service/system";
-import dbTeam from "../service/team";
 
 const OSS = require("ali-oss");
 const client = new OSS(ossconfig);
 
-class Team {
+class Serise {
   /**
-   * 获取队伍列表
+   * 获取赛事列表
    * @param req
    * @param res
    * @param next
    */
   public static async list(req: Request, res: Response, next: NextFunction) {
-    const {
-      id = 0,
-      name = "",
-      type = 0,
-      gameid = 0,
-      status = 2,
-      page = 1,
-      limit = 20
-    } = req.body;
-    await dbTeam
-      .list(id === "" ? 0 : id, name, type === "" ? 0 : type,
-       gameid === "" ? 0 : gameid, status === "" ? 0 : status, page, limit)
+    const { name = "", status = 0, gameid = 0, page = 1, limit = 20 } = req.body;
+    await dbSerise
+      .list(name, status === "" ? 0 : status, gameid === "" ? 0 : gameid, page, limit)
       .then(data => {
         dbSystem.addoperatelog(
           req.session.user.username,
-          "查看队伍列表",
-          "查看队伍列表，参数》》》" + JSON.stringify(req.body)
+          "获取赛事列表",
+          "获取赛事列表，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -51,15 +42,35 @@ class Team {
    * @param next
    */
   public static async add(req: Request, res: Response, next: NextFunction) {
-    const { name = "", logo = "", type = 1, gameid = 0, status = 0 } = req.body;
-    await dbTeam
-      .add(name, logo, type, gameid, status)
+    const {
+      name = "",
+        desc = "",
+        teams = "",
+        gameid = 0,
+        image = "",
+        many = 1,
+        status = 1,
+        stime = "",
+        etime = ""
+    } = req.body;
+    await dbSerise
+      .add(
+        name,
+        desc,
+        teams,
+        gameid,
+        image,
+        many,
+        status,
+        stime,
+        etime
+      )
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
           req.session.user.username,
-          "添加队伍",
-          "添加队伍，参数》》》" + JSON.stringify(req.body)
+          "添加赛事",
+          "添加赛事，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -67,7 +78,7 @@ class Team {
   }
 
   /**
-   * 编辑队伍
+   * 编辑赛事
    * @param req
    * @param res
    * @param next
@@ -76,19 +87,34 @@ class Team {
     const {
       id = 0,
       name = "",
-      logo = "",
-      type = 1,
+      desc = "",
+      teams = "",
       gameid = 0,
-      status = 0
+      image = "",
+      many = 1,
+      status = 1,
+      stime = "",
+      etime = ""
     } = req.body;
-    await dbTeam
-      .edit(id, name, logo, type, gameid, status)
+    await dbSerise
+      .edit(
+        id,
+        name,
+        desc,
+        teams,
+        gameid,
+        image,
+        many,
+        status,
+        stime,
+        etime
+      )
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
           req.session.user.username,
-          "编辑队伍",
-          "编辑队伍，参数》》》" + JSON.stringify(req.body)
+          "编辑赛事",
+          "编辑赛事，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -103,14 +129,14 @@ class Team {
    */
   public static async delete(req: Request, res: Response, next: NextFunction) {
     const id = req.body.id;
-    await dbTeam
+    await dbSerise
       .delete(id)
       .then(data => {
         debugLog("delete result >>>%0", data);
         dbSystem.addoperatelog(
           req.session.user.username,
-          "删除游戏",
-          "删除游戏，参数》》》" + JSON.stringify(req.body)
+          "删除赛事",
+          "删除赛事，参数》》》" + JSON.stringify(req.body)
         );
         res.json(Tools.handleResult(data));
       })
@@ -130,7 +156,7 @@ class Team {
     co(function*() {
       client.useBucket("topimgs");
       const result = yield client.put(
-        "team/logo/" + files[0].originalname,
+        "serise/logo/" + files[0].originalname,
         filename
       );
       const list = yield client.list();
@@ -145,4 +171,4 @@ class Team {
     });
   }
 }
-export default Team;
+export default Serise;
