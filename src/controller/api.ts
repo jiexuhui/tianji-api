@@ -29,15 +29,10 @@ class Api {
     debugLog("wechatconfig:%o", JSON.stringify(wechatconfig));
     const url = "https://api.weixin.qq.com/sns/jscode2session";
     const result = await axios.get(url, { params: wechatconfig }).then();
+    debugLog("result:%o", result);
     Object.assign(userinfo, { openid: result.data.openid });
-    // const isnew = await dbApi.isNewanchor(userinfo);
-    // debugLog("isnew:%o", isnew[1][0]);
-    // Object.assign(userinfo, { isnew: isnew[0][0].isNew });
-    // debugLog("userinfo1:%o", userinfo);
-    // if (isnew[0][0].isNew === 0) {
-    //   Object.assign(userinfo, isnew[1][0]);
-    // }
     debugLog("userinfo:%o", userinfo);
+    const isnew = await dbApi.saveuserinfo(userinfo);
     Object.assign(resdata, {
       userinfo,
       token: result.data.session_key

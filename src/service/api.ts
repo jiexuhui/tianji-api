@@ -15,20 +15,14 @@ class Api {
     city: string;
     country: string;
     gender: number;
-    isbook: number;
     language: string;
     nickName: string;
     openid: string;
-    phone: string;
     province: string;
-    realname: string;
-    taobao: string;
-    wechat: string;
-    formId: string;
   }) {
     return await db.exec(
-      "call p_api_add_anchor(:avatarUrl,:city,:country,:gender,:isbook" +
-        ",:language,:nickName,:openid,:phone,:province,:realname,:taobao,:wechat,:formId)",
+      `call p_api_add_user(:avatarUrl,:city,:country,:gender,:language,
+        :nickName,:openid,:province)`,
       params
     );
   }
