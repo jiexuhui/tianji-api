@@ -44,9 +44,15 @@ class Serise {
     status: number,
     stime: string,
     etime: string,
+    lteam: number,
+    lscore: number,
+    rteam: number,
+    rscore: number,
+    whitch: number
   ) {
     return await db.exec(
-      `call p_bk_serise_add(:name,:desc,:teams,:gameid,:image,:many,:status,:stime,:etime)`,
+      `call p_bk_serise_add(:name,:desc,:teams,:gameid,:image,:many,:status,
+        :stime,:etime,:lteam,:lscore,:rteam,:rscore,:whitch)`,
       {
         name,
         desc,
@@ -56,7 +62,12 @@ class Serise {
         many,
         status,
         stime,
-        etime
+        etime,
+        lteam,
+        lscore,
+        rteam,
+        rscore,
+        whitch
       }
     );
   }
@@ -78,9 +89,15 @@ class Serise {
     status: number,
     stime: string,
     etime: string,
+    lteam: number,
+    lscore: number,
+    rteam: number,
+    rscore: number,
+    whitch: number
   ) {
     return await db.exec(
-      `call p_bk_serise_edit(:id,:name,:desc,:teams,:gameid,:image,:many,:status,:stime,:etime)`,
+      `call p_bk_serise_edit(:id,:name,:desc,:teams,:gameid,:image,:many,
+        :status,:stime,:etime,:lteam,:lscore,:rteam,:rscore,:whitch)`,
       {
         id,
         name,
@@ -91,7 +108,12 @@ class Serise {
         many,
         status,
         stime,
-        etime
+        etime,
+        lteam,
+        lscore,
+        rteam,
+        rscore,
+        whitch
       }
     );
   }

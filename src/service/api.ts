@@ -78,5 +78,60 @@ class Api {
   public static async getBanners() {
     return await db.execMultiple("call p_api_banners()");
   }
+
+  /**
+   * 获取文章详情
+   * @param gametype
+   */
+  public static async getArticleDetail(articleid: number) {
+    return await db.exec("call p_api_article_detail(:articleid)", {
+      articleid
+    });
+  }
+
+  /**
+   * 添加实时对话
+   * @param gametype
+   */
+  public static async addChatLog(
+    openid: string,
+    content: string,
+    matchid: number
+  ) {
+    return await db.exec("call p_api_chatlogs_add(:openid,:content,:matchid)", {
+      openid,
+      content,
+      matchid
+    });
+  }
+
+  /**
+   * 实时对话列表
+   * @param gametype
+   */
+  public static async getChatLogs(openid: string, matchid: number) {
+    return await db.execMultiple("call p_api_chat_logs(:openid,:matchid)", {
+      openid,
+      matchid
+    });
+  }
+
+  /**
+   * 获取赛事列表
+   * @param gametype
+   */
+  public static async seriseList() {
+    return await db.execMultiple("call p_api_serise_list()", {});
+  }
+
+  /**
+   * 获取赛事详情
+   * @param gametype
+   */
+  public static async seriseDetail(seriseid: number) {
+    return await db.execMultiple("call p_api_serise_detail(:seriseid)", {
+      seriseid
+    });
+  }
 }
 export default Api;

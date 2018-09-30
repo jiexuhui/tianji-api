@@ -379,24 +379,20 @@ class System {
     debug("api:system:adduser")("addrreqDataesult:%o", reqData);
     const addResult: any = await dbSystem
       .addSystemUser(reqData)
-      .then(data => Tools.handleResult(data))
+      .then()
       .catch(err => next(err));
-    if (addResult.code === 10003) {
-      res.json(msgCode.existsUser);
-      return;
-    }
     debug("api:system:adduser")("addresult:%o", addResult);
-    if (addResult && addResult[0].id) {
+    if (addResult && addResult.id) {
       await dbSystem.addoperatelog(
         req.session.user.username,
         "添加用户",
         JSON.stringify(reqData)
       );
-      msgCode.success.data = addResult[0];
+      msgCode.success.data = addResult;
       res.json(msgCode.success);
       return;
     } else {
-      res.json(msgCode.exception);
+      res.json(Tools.handleResult(addResult));
       return;
     }
   }
@@ -423,13 +419,9 @@ class System {
     reqData.ip = req.get("X-Real-IP") || req.get("X-Forwarded-For") || req.ip;
     const editResult: any = await dbSystem
       .editSystemUser(reqData)
-      .then(data => Tools.handleResult(data))
+      .then()
       .catch(err => next(err));
-    if (editResult.code === 10001) {
-      res.json({ code: 10003, msg: "用户不存在" });
-      return;
-    }
-    if (editResult && editResult.code === 200) {
+    if (editResult && editResult[0].code === 200) {
       await dbSystem.addoperatelog(
         req.session.user.username,
         "编辑用户",
@@ -439,7 +431,7 @@ class System {
       res.json(msgCode.success);
       return;
     } else {
-      res.json(msgCode.exception);
+      res.json(Tools.handleResult(editResult));
       return;
     }
   }

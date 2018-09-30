@@ -21,9 +21,21 @@ class Serise {
    * @param next
    */
   public static async list(req: Request, res: Response, next: NextFunction) {
-    const { name = "", status = 0, gameid = 0, page = 1, limit = 20 } = req.body;
+    const {
+      name = "",
+      status = 0,
+      gameid = 0,
+      page = 1,
+      limit = 20
+    } = req.body;
     await dbSerise
-      .list(name, status === "" ? 0 : status, gameid === "" ? 0 : gameid, page, limit)
+      .list(
+        name,
+        status === "" ? 0 : status,
+        gameid === "" ? 0 : gameid,
+        page,
+        limit
+      )
       .then(data => {
         dbSystem.addoperatelog(
           req.session.user.username,
@@ -44,14 +56,19 @@ class Serise {
   public static async add(req: Request, res: Response, next: NextFunction) {
     const {
       name = "",
-        desc = "",
-        teams = "",
-        gameid = 0,
-        image = "",
-        many = 1,
-        status = 1,
-        stime = "",
-        etime = ""
+      desc = "",
+      teams = "",
+      gameid = 0,
+      image = "",
+      many = 1,
+      status = 1,
+      stime = "",
+      etime = "",
+      lteam = 0,
+      lscore = 0,
+      rteam = 0,
+      rscore = 0,
+      whitch = 1
     } = req.body;
     await dbSerise
       .add(
@@ -63,7 +80,12 @@ class Serise {
         many,
         status,
         stime,
-        etime
+        etime,
+        lteam,
+        lscore,
+        rteam,
+        rscore,
+        whitch
       )
       .then(data => {
         debugLog("add result >>>%0", data);
@@ -94,7 +116,12 @@ class Serise {
       many = 1,
       status = 1,
       stime = "",
-      etime = ""
+      etime = "",
+      lteam = 0,
+      lscore = 0,
+      rteam = 0,
+      rscore = 0,
+      whitch = 1
     } = req.body;
     await dbSerise
       .edit(
@@ -107,7 +134,12 @@ class Serise {
         many,
         status,
         stime,
-        etime
+        etime,
+        lteam,
+        lscore,
+        rteam,
+        rscore,
+        whitch
       )
       .then(data => {
         debugLog("add result >>>%0", data);

@@ -125,5 +125,102 @@ class Api {
       .then(data => res.json(Tools.handleResult(data)))
       .catch(err => next(err));
   }
+
+  /**
+   * 获取文章详情
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async getArticleDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .getArticleDetail(req.body.articleid)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
+
+  /**
+   * 天机实时对话
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async addChatLog(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { content = "" } = req.body;
+    await dbApi
+      .addChatLog(
+        req.body.openid,
+        new Buffer(content).toString("base64"),
+        req.body.matchid
+      )
+      .then(data => {
+        res.json(Tools.handleResult(data));
+      })
+      .catch(err => next(err));
+  }
+
+  /**
+   * 获取实时对话列表
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async getChatLogs(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .getChatLogs(req.body.openid, req.body.matchid)
+      .then(data => {
+        data[0].forEach(item => {
+          item.content = new Buffer(item.content, "base64").toString();
+        });
+        res.json(Tools.handleResult(data));
+      })
+      .catch(err => next(err));
+  }
+
+  /**
+   * 获取赛事列表
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async seriseList(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .seriseList()
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
+
+  /**
+   * 获取赛事详情
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async seriseDetail(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .seriseDetail(req.body.seriseid)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
 }
 export default Api;

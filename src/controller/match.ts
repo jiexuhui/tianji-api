@@ -21,9 +21,23 @@ class Match {
    * @param next
    */
   public static async list(req: Request, res: Response, next: NextFunction) {
-    const { id = 0, name = "", status = 0, page = 1, limit = 20, seriseid = 0} = req.body;
+    const {
+      id = 0,
+      name = "",
+      status = 0,
+      page = 1,
+      limit = 20,
+      seriseid = 0
+    } = req.body;
     await dbMatch
-      .list(id === "" ? 0 : id, name, status === "" ? 0 : status, page, limit, seriseid === "" ? 0 : seriseid)
+      .list(
+        id === "" ? 0 : id,
+        name,
+        status === "" ? 0 : status,
+        page,
+        limit,
+        seriseid === "" ? 0 : seriseid
+      )
       .then(data => {
         dbSystem.addoperatelog(
           req.session.user.username,
@@ -57,7 +71,15 @@ class Match {
       rightscore = 0,
       many = 1,
       whitch = 1,
-      seriseid
+      seriseid,
+      ltower = 0,
+      rtower = 0,
+      lmoney = 0,
+      rmoney = 0,
+      ldragon = 0,
+      rdragon = 0,
+      lkill = 0,
+      rkill = 0
     } = req.body;
     await dbMatch
       .add(
@@ -75,7 +97,15 @@ class Match {
         rightscore,
         many,
         whitch,
-        seriseid
+        seriseid,
+        ltower,
+        rtower,
+        lmoney,
+        rmoney,
+        ldragon,
+        rdragon,
+        lkill,
+        rkill
       )
       .then(data => {
         debugLog("add result >>>%0", data);
@@ -112,7 +142,15 @@ class Match {
       rightscore = 0,
       many = 1,
       whitch = 1,
-      seriseid = 0
+      seriseid = 0,
+      ltower = 0,
+      rtower = 0,
+      lmoney = 0,
+      rmoney = 0,
+      ldragon = 0,
+      rdragon = 0,
+      lkill = 0,
+      rkill = 0
     } = req.body;
     await dbMatch
       .edit(
@@ -131,7 +169,15 @@ class Match {
         rightscore,
         many,
         whitch,
-        seriseid
+        seriseid,
+        ltower,
+        rtower,
+        lmoney,
+        rmoney,
+        ldragon,
+        rdragon,
+        lkill,
+        rkill
       )
       .then(data => {
         debugLog("add result >>>%0", data);

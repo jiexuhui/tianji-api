@@ -18,7 +18,12 @@ class ApiRouter {
       .post("/selectTeam", api.selectTeam)
       .post("/matchList", api.matchList)
       .post("/getMatchArticle", api.getMatchArticles)
-      .post("/getBanners", api.getBanners);
+      .post("/getBanners", api.getBanners)
+      .post("/getArticleDetail", api.getArticleDetail)
+      .post("/getChatLogs", api.getChatLogs)
+      .post("/addChatLog", api.addChatLog)
+      .post("/seriseList", api.seriseList)
+      .post("/seriseDetail", api.seriseDetail);
   }
 }
 

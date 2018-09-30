@@ -53,11 +53,20 @@ class Match {
     rightscore: number,
     many: number,
     whitch: number,
-    seriseid: number
+    seriseid: number,
+    ltower,
+    rtower,
+    lmoney,
+    rmoney,
+    ldragon,
+    rdragon,
+    lkill,
+    rkill
   ) {
     return await db.exec(
       `call p_bk_match_add(:name,:desc,:teams,:gameid,:status,:sort,:stime,:etime,
-        :leftteam,:leftscore,:rightteam,:rightscore,:many,:whitch,:seriseid)`,
+        :leftteam,:leftscore,:rightteam,:rightscore,:many,:whitch,:seriseid,
+        :ltower,:rtower,:lmoney,:rmoney,:ldragon,:rdragon,:lkill,:rkill)`,
       {
         name,
         desc,
@@ -73,7 +82,15 @@ class Match {
         rightscore,
         many,
         whitch,
-        seriseid
+        seriseid,
+        ltower,
+        rtower,
+        lmoney,
+        rmoney,
+        ldragon,
+        rdragon,
+        lkill,
+        rkill
       }
     );
   }
@@ -100,11 +117,20 @@ class Match {
     rightscore: number,
     many: number,
     whitch: number,
-    seriseid: number
+    seriseid: number,
+    ltower,
+    rtower,
+    lmoney,
+    rmoney,
+    ldragon,
+    rdragon,
+    lkill,
+    rkill
   ) {
     return await db.exec(
       `call p_bk_match_edit(:id,:name,:desc,:teams,:gameid,:status,:sort,:stime,
-        :etime,:leftteam,:leftscore,:rightteam,:rightscore,:many,:whitch,:seriseid)`,
+        :etime,:leftteam,:leftscore,:rightteam,:rightscore,:many,:whitch,:seriseid,
+        :ltower,:rtower,:lmoney,:rmoney,:ldragon,:rdragon,:lkill,:rkill)`,
       {
         id,
         name,
@@ -121,7 +147,15 @@ class Match {
         rightscore,
         many,
         whitch,
-        seriseid
+        seriseid,
+        ltower,
+        rtower,
+        lmoney,
+        rmoney,
+        ldragon,
+        rdragon,
+        lkill,
+        rkill
       }
     );
   }
