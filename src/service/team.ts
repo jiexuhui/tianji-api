@@ -70,17 +70,19 @@ class Team {
     logo: string,
     type: number,
     gameid: number,
-    status: number
+    status: number,
+    pic: string
   ) {
     return await db.exec(
-      "call p_bk_team_edit(:id,:name,:logo,:type,:gameid,:status)",
+      "call p_bk_team_edit(:id,:name,:logo,:type,:gameid,:status,:pic)",
       {
         id,
         name,
         logo,
         type,
         gameid,
-        status
+        status,
+        pic
       }
     );
   }

@@ -31,8 +31,15 @@ class Team {
       limit = 20
     } = req.body;
     await dbTeam
-      .list(id === "" ? 0 : id, name, type === "" ? 0 : type,
-       gameid === "" ? 0 : gameid, status === "" ? 0 : status, page, limit)
+      .list(
+        id === "" ? 0 : id,
+        name,
+        type === "" ? 0 : type,
+        gameid === "" ? 0 : gameid,
+        status === "" ? 0 : status,
+        page,
+        limit
+      )
       .then(data => {
         dbSystem.addoperatelog(
           req.session.user.username,
@@ -79,10 +86,11 @@ class Team {
       logo = "",
       type = 1,
       gameid = 0,
-      status = 0
+      status = 0,
+      pic = ""
     } = req.body;
     await dbTeam
-      .edit(id, name, logo, type, gameid, status)
+      .edit(id, name, logo, type, gameid, status, pic)
       .then(data => {
         debugLog("add result >>>%0", data);
         dbSystem.addoperatelog(
@@ -131,6 +139,34 @@ class Team {
       client.useBucket("topimgs");
       const result = yield client.put(
         "team/logo/" + files[0].originalname,
+        filename
+      );
+      const list = yield client.list();
+      debug("api:upload:")("list:", result);
+      fs.unlinkSync(filename);
+      msgCode.success.data = result;
+      res.json(msgCode.success);
+      return;
+    }).catch(err => {
+      next(err);
+      debug("api:upload:%j")("err:", err);
+    });
+  }
+
+  /**
+   * 上传宣传图
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async uploadPic(req: any, res: Response, next: NextFunction) {
+    const files = req.files;
+    debug("api:upload")("file:%o", req.files);
+    const filename = "uploads/" + files[0].filename;
+    co(function*() {
+      client.useBucket("topimgs");
+      const result = yield client.put(
+        "team/pic/" + files[0].originalname,
         filename
       );
       const list = yield client.list();

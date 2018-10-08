@@ -23,7 +23,7 @@ class Game {
   public static async list(req: Request, res: Response, next: NextFunction) {
     const { id = 0, game = "", page = 1, limit = 20 } = req.body;
     await dbGame
-      .list(id === 0 ? "" : id, game, page, limit)
+      .list(id === 0 ? 0 : id, game, page, limit)
       .then(data => {
         dbSystem.addoperatelog(
           req.session.user.username,

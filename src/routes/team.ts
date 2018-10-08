@@ -12,7 +12,8 @@ class TeamRouter {
       .post("/add", team.add)
       .post("/edit", team.edit)
       .post("/delete", team.delete)
-      .post("/upload", team.upload);
+      .post("/upload", team.upload)
+      .post("/uploadPic", team.uploadPic);
   }
 }
 
