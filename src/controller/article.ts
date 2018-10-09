@@ -98,6 +98,28 @@ class Banner {
   }
 
   /**
+   * 文章详情
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async detail(req: Request, res: Response, next: NextFunction) {
+    const { id = 0 } = req.body;
+    await dbArticle
+      .detail(id)
+      .then(data => {
+        debugLog("add result >>>%0", data);
+        dbSystem.addoperatelog(
+          req.session.user.username,
+          "编辑文章",
+          "编辑文章，参数》》》" + JSON.stringify(req.body)
+        );
+        res.json(Tools.handleResult(data));
+      })
+      .catch(err => next(err));
+  }
+
+  /**
    * 删除游戏
    * @param req
    * @param res

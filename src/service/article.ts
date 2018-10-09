@@ -20,6 +20,15 @@ class Article {
   }
 
   /**
+   * 游戏列表
+   */
+  public static async detail(id: number) {
+    return await db.exec("call p_api_article_detail(:id)", {
+      id
+    });
+  }
+
+  /**
    * 添加文章
    * @param title
    * @param date
