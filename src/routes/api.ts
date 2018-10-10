@@ -23,7 +23,10 @@ class ApiRouter {
       .post("/getChatLogs", api.getChatLogs)
       .post("/addChatLog", api.addChatLog)
       .post("/seriseList", api.seriseList)
-      .post("/seriseDetail", api.seriseDetail);
+      .post("/seriseDetail", api.seriseDetail)
+      .post("/guessings", api.guessings)
+      .post("/answerGuessing", api.answerGuessing)
+      .post("/wechatInfo", api.wechatInfo);
   }
 }
 

@@ -222,5 +222,90 @@ class Api {
       .then(data => res.json(Tools.handleResult(data)))
       .catch(err => next(err));
   }
+
+  /**
+   * 获取赛事详情
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async guessings(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    let tcount = 0;
+    let ncount = 0;
+    let lcount = 0;
+    const result = {
+      today: { data: [], count: 0 },
+      next: { data: [], count: 0 },
+      last: { data: [], count: 0 }
+    };
+    await dbApi
+      .guessings(req.body.openid)
+      .then(data => {
+        data[0].forEach((item, index) => {
+          if (item.right !== 0 && item.right === item.answer) {
+            tcount++;
+          }
+        });
+        result.today.data = data[0];
+        result.today.count = tcount;
+
+        data[1].forEach((item, index) => {
+          if (item.right !== 0 && item.right === item.answer) {
+            ncount++;
+          }
+        });
+        result.next.data = data[1];
+        result.next.count = ncount;
+
+        data[2].forEach((item, index) => {
+          if (item.right !== 0 && item.right === item.answer) {
+            lcount++;
+          }
+        });
+        result.last.data = data[2];
+        result.last.count = lcount;
+        msgCode.success.data = result;
+        res.json(msgCode.success);
+      })
+      .catch(err => next(err));
+  }
+
+  /**
+   * 选择竞猜答案
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async answerGuessing(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .answerGuessing(req.body.guessid, req.body.openid, req.body.answer)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
+
+  /**
+   * 选择竞猜答案
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async wechatInfo(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .wechatInfo(req.body.openid, req.body.phone, req.body.wechat)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
 }
 export default Api;

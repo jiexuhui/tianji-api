@@ -133,5 +133,50 @@ class Api {
       seriseid
     });
   }
+
+  /**
+   * 获取竞猜列表
+   * @param gametype
+   */
+  public static async guessings(openid: string) {
+    return await db.execMultiple("call p_api_guessing_list(:openid)", {
+      openid
+    });
+  }
+
+  /**
+   * 选择竞猜答案
+   * @param gametype
+   */
+  public static async answerGuessing(
+    guessid: number,
+    openid: string,
+    answer: number
+  ) {
+    return await db.exec(
+      "call p_api_answer_guessing(:guessid,:openid,:answer)",
+      {
+        guessid,
+        openid,
+        answer
+      }
+    );
+  }
+
+  /**
+   * 填写领奖信息
+   * @param gametype
+   */
+  public static async wechatInfo(
+    openid: number,
+    phone: string,
+    wechat: number
+  ) {
+    return await db.exec("call p_api_wechat_info(:openid,:phone,:wechat)", {
+      openid,
+      phone,
+      wechat
+    });
+  }
 }
 export default Api;
