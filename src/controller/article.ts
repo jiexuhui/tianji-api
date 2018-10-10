@@ -154,7 +154,7 @@ class Banner {
     co(function*() {
       client.useBucket("topimgs");
       const result = yield client.put(
-        "game/article/" + files[0].originalname,
+        "game/article/report" + files[0].originalname,
         filename
       );
       const list = yield client.list();

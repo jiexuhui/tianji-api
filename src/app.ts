@@ -46,7 +46,8 @@ class App {
       if (req.path === "/favicon.ico" || req.path === "/robots.txt") {
         return;
       }
-      res.header("Access-Control-Allow-Origin", "http://localhost:9527");
+      res.header("Access-Control-Allow-Origin", "*");
+      // res.header("Access-Control-Allow-Origin", "http://localhost:3010");
       res.header(
         "Access-Control-Allow-Methods",
         "PUT, GET, POST, DELETE, OPTIONS"
@@ -89,8 +90,9 @@ class App {
     );
     // 验证session和token
     app.use("/admin", (req, res, next) => {
+      this.debugLog("req.originalUrl:", req.originalUrl);
       if (!authority.notneed.includes(req.originalUrl)) {
-        // this.debugLog("session:%o", req.session.user);
+        //
         if (req.session === undefined) {
           res.json(msgCode.invalidToken);
           return;

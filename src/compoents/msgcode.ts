@@ -21,6 +21,7 @@ export const msgCode = {
   existsActicityLog: { code: 10010, msg: "已选择队伍" },
   existsSerise: { code: 10011, msg: "赛事已存在" },
   existsGuessing: { code: 10012, msg: "竞猜已存在" },
-  existsAnswer: { code: 10013, msg: "您已参与过该竞猜" }
+  existsAnswer: { code: 10013, msg: "您已参与过该竞猜" },
+  existsEntire: { code: 10014, msg: "已过期" }
 };
 export default msgCode;
