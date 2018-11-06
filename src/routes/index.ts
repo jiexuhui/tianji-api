@@ -9,6 +9,7 @@ import matchRouter from "../routes/match";
 import seriseRouter from "../routes/serise";
 import systemRouter from "../routes/system";
 import teamRouter from "../routes/team";
+import yeziRouter from "../routes/yezi";
 
 /**
  * 基础路由
@@ -33,6 +34,7 @@ class BaseRouter {
     this.router.use("/admin/match", matchRouter);
     this.router.use("/admin/serise", seriseRouter);
     this.router.use("/admin/guessing", guessingRouter);
+    this.router.use("/api/yezi", yeziRouter);
   }
 }
 
