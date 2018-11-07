@@ -33,6 +33,13 @@ class Api {
     Object.assign(userinfo, { openid: result.data.openid });
     debugLog("userinfo:%o", userinfo);
     const isnew = await dbApi.saveuserinfo(userinfo);
+    Object.assign(userinfo, {
+      integral: isnew[0].integral,
+      uid: isnew[0].id,
+      follow: isnew[0].follow,
+      fans: isnew[0].fans,
+      god: isnew[0].god
+    });
     Object.assign(resdata, {
       userinfo,
       token: result.data.session_key
@@ -304,6 +311,40 @@ class Api {
   ) {
     await dbApi
       .wechatInfo(req.body.openid, req.body.phone, req.body.wechat)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
+
+  /**
+   * 申请成为大神
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async applyGod(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .applyGod(req.body.uid)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
+
+  /**
+   * 获取推单列表
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async pushCases(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .pushCases(req.body.uid)
       .then(data => res.json(Tools.handleResult(data)))
       .catch(err => next(err));
   }

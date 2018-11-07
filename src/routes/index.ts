@@ -4,6 +4,7 @@ import apiRouter from "../routes/api";
 import articleRouter from "../routes/article";
 import bannerRouter from "../routes/banner";
 import gameRouter from "../routes/game";
+import godRouter from "../routes/godpass";
 import guessingRouter from "../routes/guessing";
 import matchRouter from "../routes/match";
 import seriseRouter from "../routes/serise";
@@ -29,6 +30,7 @@ class BaseRouter {
     this.router.use("/admin", systemRouter);
     this.router.use("/api", apiRouter);
     this.router.use("/admin/banner", bannerRouter);
+    this.router.use("/admin/godpass", godRouter);
     this.router.use("/admin/article", articleRouter);
     this.router.use("/admin/team", teamRouter);
     this.router.use("/admin/match", matchRouter);

@@ -7,6 +7,10 @@
     "outDir": "dist",
     "pretty": true
   },
-  "include": ["src/**/*.ts", "../tianji-admin/src/api/team.js"],
+  "include": [
+    "src/**/*.ts",
+    "../tianji-admin/src/api/team.js",
+    "../tianji-admin/src/api/godpass.js"
+  ],
   "exclude": ["node_modules"]
 }

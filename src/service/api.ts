@@ -178,5 +178,25 @@ class Api {
       wechat
     });
   }
+
+  /**
+   * 申请成为大神
+   * @param uid
+   */
+  public static async applyGod(uid: number) {
+    return await db.exec("call p_api_apply_god(:uid)", {
+      uid
+    });
+  }
+
+  /**
+   * 申请成为大神
+   * @param uid
+   */
+  public static async pushCases(uid: number) {
+    return await db.execMultiple("call p_api_pushcase_list(:uid)", {
+      uid
+    });
+  }
 }
 export default Api;
