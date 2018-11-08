@@ -348,5 +348,36 @@ class Api {
       .then(data => res.json(Tools.handleResult(data)))
       .catch(err => next(err));
   }
+
+  /**
+   * 写推单
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async addCase(req: Request, res: Response, next: NextFunction) {
+    const params = req.body;
+    await dbApi
+      .addCase(params)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
+
+  /**
+   * 写推单
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async caseIndex(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .caseIndex()
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
 }
 export default Api;

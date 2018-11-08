@@ -198,5 +198,33 @@ class Api {
       uid
     });
   }
+
+  /**
+   * 写推单
+   * @param uid
+   */
+  public static async addCase(params: {
+    matchid: number;
+    fight: number;
+    uid: number;
+    coin: number;
+    typeid: number;
+    answer: number;
+    title: string;
+    content: string;
+    rt: number;
+  }) {
+    return await db.exec(
+      "call p_api_add_case(:matchid,:uid,:typeid,:fight,:coin,:answer,:title,:content,:rt)",
+      params
+    );
+  }
+
+  /**
+   * 获取写推单初始数据
+   */
+  public static async caseIndex() {
+    return await db.execMultiple("call p_api_case_index()");
+  }
 }
 export default Api;

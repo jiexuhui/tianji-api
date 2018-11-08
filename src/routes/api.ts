@@ -28,7 +28,9 @@ class ApiRouter {
       .post("/answerGuessing", api.answerGuessing)
       .post("/wechatInfo", api.wechatInfo)
       .post("/applyGod", api.applyGod)
-      .post("/pushCases", api.pushCases);
+      .post("/pushCases", api.pushCases)
+      .post("/addCase", api.addCase)
+      .post("/caseIndex", api.caseIndex);
   }
 }
 
