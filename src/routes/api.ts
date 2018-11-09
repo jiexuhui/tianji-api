@@ -30,7 +30,10 @@ class ApiRouter {
       .post("/applyGod", api.applyGod)
       .post("/pushCases", api.pushCases)
       .post("/addCase", api.addCase)
-      .post("/caseIndex", api.caseIndex);
+      .post("/caseIndex", api.caseIndex)
+      .post("/userInfo", api.userInfo)
+      .post("/myFollows", api.myFollows)
+      .post("/buySilkLogs", api.buySilkLogs);
   }
 }
 

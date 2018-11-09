@@ -226,5 +226,34 @@ class Api {
   public static async caseIndex() {
     return await db.execMultiple("call p_api_case_index()");
   }
+
+  /**
+   * 获取用户数据
+   */
+  public static async userInfo(uid: number) {
+    return await db.exec("call p_api_user_info(:uid)", { uid });
+  }
+
+  /**
+   * 我的关注
+   * @param uid
+   */
+  public static async myFollows(uid: number, gameid: number) {
+    return await db.execMultiple("call p_api_my_follows(:uid,:gameid)", {
+      uid,
+      gameid
+    });
+  }
+
+  /**
+   * 我购买的推单
+   * @param uid
+   */
+  public static async buySilkLogs(uid: number, gameid: number) {
+    return await db.execMultiple("call p_api_silk_logs(:uid,:gameid)", {
+      uid,
+      gameid
+    });
+  }
 }
 export default Api;

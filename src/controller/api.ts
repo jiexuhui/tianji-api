@@ -379,5 +379,56 @@ class Api {
       .then(data => res.json(Tools.handleResult(data)))
       .catch(err => next(err));
   }
+
+  /**
+   * 获取用户信息
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async userInfo(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .userInfo(req.body.uid)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
+
+  /**
+   * 获取用户信息
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async myFollows(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .myFollows(req.body.uid, req.body.gameid)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
+
+  /**
+   * 我购买的推单
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async buySilkLogs(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .buySilkLogs(req.body.uid, req.body.gameid)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
 }
 export default Api;
