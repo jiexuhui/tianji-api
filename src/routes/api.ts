@@ -33,7 +33,8 @@ class ApiRouter {
       .post("/caseIndex", api.caseIndex)
       .post("/userInfo", api.userInfo)
       .post("/myFollows", api.myFollows)
-      .post("/buySilkLogs", api.buySilkLogs);
+      .post("/buySilkLogs", api.buySilkLogs)
+      .post("/putForward", api.putForward);
   }
 }
 

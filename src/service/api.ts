@@ -205,17 +205,17 @@ class Api {
    */
   public static async addCase(params: {
     matchid: number;
-    fight: number;
     uid: number;
-    coin: number;
-    typeid: number;
-    answer: number;
+    price: number;
+    answer: string;
     title: string;
     content: string;
-    rt: number;
+    matchname: string;
+    team1: string;
+    team2: string;
   }) {
     return await db.exec(
-      "call p_api_add_case(:matchid,:uid,:typeid,:fight,:coin,:answer,:title,:content,:rt)",
+      "call p_api_add_case(:matchid,:uid,:price,:answer,:title,:content,:matchname,:team1,:team2)",
       params
     );
   }
@@ -253,6 +253,16 @@ class Api {
     return await db.execMultiple("call p_api_silk_logs(:uid,:gameid)", {
       uid,
       gameid
+    });
+  }
+
+  /**
+   * 我购买的推单
+   * @param uid
+   */
+  public static async putForward(uid: number) {
+    return await db.execMultiple("call p_api_put_forward(:uid)", {
+      uid
     });
   }
 }

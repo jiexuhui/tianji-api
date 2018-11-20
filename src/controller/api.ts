@@ -430,5 +430,22 @@ class Api {
       .then(data => res.json(Tools.handleResult(data)))
       .catch(err => next(err));
   }
+
+  /**
+   * 提现
+   * @param req
+   * @param res
+   * @param next
+   */
+  public static async putForward(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    await dbApi
+      .putForward(req.body.uid)
+      .then(data => res.json(Tools.handleResult(data)))
+      .catch(err => next(err));
+  }
 }
 export default Api;
